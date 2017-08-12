@@ -1,0 +1,147 @@
+<div ui-content-for="title">
+  <span>详情</span>
+</div>
+
+<div class="scrollable">
+  <div class="scrollable-content">
+    <div class="section">
+     <ui-state id='activeTab' default='1'></ui-state>
+
+      <ul class="nav nav-tabs">
+        <li ui-class="{'active': activeTab == 1}">
+          <a ui-set="{'activeTab': 1}">活动详情</a>
+        </li>
+        <li ui-class="{'active': activeTab == 2}">
+          <a ui-set="{'activeTab': 2}">反馈详情</a>
+        </li>
+        <li ui-class="{'active': activeTab == 3}">
+          <a ui-set="{'activeTab': 3}">子活动详情</a>
+        </li>
+      </ul>
+
+      <div ui-if="activeTab == 1">
+        <h3 class="page-header">查看活动详情</h3>
+        <div class="panel panel-default">
+        <div class="panel-body">
+           <p>名称：{{event_union.name}}</p>
+		   <p>地点：{{string_convert(event_union.location)}}</p>
+		   <p>部门：{{event_union.department}}</p>
+		   <p>开始时间：{{string_convert(event_union.start_date)}}</p>
+		   <p>结束时间：{{string_convert(event_union.end_date)}}</p>
+		   <p>详情：{{string_convert(event_union.detail)}}</p>
+		   <p>备注：{{string_convert(event_union.comment)}}</p>
+		   <p>签到：
+		   		<i ng-show="event_union.event_qrcode"class="fa fa-check-circle"style="color:green">提供二维码签到</i>
+		   		<i ng-hide="event_union.event_qrcode"class="fa fa-times-circle"style="color:red"></i>
+			</p>
+			<p>反馈：
+		   		<i ng-show="event_union.feedback"class="fa fa-check-circle"style="color:green">请在反馈详情中查看</i>
+		   		<i ng-hide="event_union.feedback"class="fa fa-times-circle"style="color:red"></i>
+			</p>
+			<p>子活动：
+		   		<i ng-show="event_union.activity"class="fa fa-check-circle"style="color:green">请在子活动详情中查看
+		   		</i>
+		   		<i ng-hide="event_union.activity"class="fa fa-times-circle"style="color:red"></i>
+			</p>
+        </div>
+      </div>
+      <div class="panel panel-default">
+		<div class="panel-body">
+			<form>
+				<fieldset>
+					<legend>管理</legend>
+					<p>活动状态为：
+		   					<i ng-hide="event_union.status"class="fa fa-check-circle"style="color:green">进行中
+		   					</i>
+		   					<i ng-show="event_union.status"class="fa fa-times-circle"style="color:red">已结束</i>
+					</p>
+					<div class="form-group" ng-if="event_union.attachemnt != -1">
+						<label>活动附件</label>
+						<a href="" ui-turn-on="modal1" class="btn btn-default" ng-click="download(event_union.attachment)">下载</a>
+					</div>
+					<div class="form-group" ng-hide="event_union.status">
+						<label>点此结束本次活动</label>
+						<button class="btn btn-primary btn-block" ng-click="end_event()">结束</button>
+					</div>
+				</fieldset>
+			<hr>
+			</form>
+      	</div>
+       </div>
+	  </div>
+
+      <div ui-if="activeTab == 2">
+        <h3 class="page-header">反馈形式</h3>
+
+        <div class="panel panel-default">
+        <div class="panel-body">
+           	<p>反馈：
+		   		<i ng-show="event_union.feedback"class= "fa fa-check-circle"style="color:green">本次活动需要反馈</i>
+		   		<i ng-hide="event_union.feedback" class= "fa fa-times-circle"style="color:red">
+		   		本次活动不需要反馈</i>
+			</p>
+			<p>反馈已收到：
+		   		<i ng-show="event_union.recieve" class= "fa fa-check-circle" style="color:green"></i>
+		   		<i ng-hide="event_union.recieve" class= "fa fa-times-circle" style="color:red"></i>
+			</p>
+			<p>反馈文本信息：
+		   		<i ng-show="event_union.txt" class= "fa fa-check-circle"style="color:green"></i>
+		   		<i ng-hide="event_union.txt" class= "fa fa-times-circle"style="color:red"></i>
+			</p>
+			<p>反馈文件：
+		   		<i ng-show="event_union.file" class= "fa fa-check-circle"style="color:green"></i>
+		   		<i ng-hide="event_union.file" class= "fa fa-times-circle"style="color:red"></i>
+			</p>
+
+        </div>
+      </div>
+      <h3 class="panel-title"><i class="fa fa-exclamation-circle" style="color:#dd4b39"></i>&nbsp请登录网页查看下级反馈情况</h3>
+  		<hr>
+      </div>
+
+      <div ui-if="activeTab == 3">
+        <h3 class="page-header">子活动形式</h3>
+        <div class="panel panel-default">
+        <div class="panel-body">
+           	<p>子活动：
+		   		<i ng-show="event_union.activity"class= "fa fa-check-circle"style="color:green">本次活动需要创建子活动</i>
+		   		<i ng-hide="event_union.activity" class= "fa fa-times-circle"style="color:red">
+		   		本次活动不需要创建子活动</i>
+			</p>
+			<p>子活动签到：
+		   		<i ng-show="event_union.req_qrcode" class= "fa fa-check-circle" style="color:green"></i>
+		   		<i ng-hide="event_union.req_qrcode" class= "fa fa-times-circle" style="color:red"></i>
+			</p>
+			<p>子活动照片：
+		   		<i ng-show="event_union.req_photo" class= "fa fa-check-circle"style="color:green"></i>
+		   		<i ng-hide="event_union.req_photo" class= "fa fa-times-circle"style="color:red"></i>
+			</p>
+			<p>子活动总结：
+		   		<i ng-show="event_union.req_report" class= "fa fa-check-circle"style="color:green"></i>
+		   		<i ng-hide="event_union.req_report" class= "fa fa-times-circle"style="color:red"></i>
+			</p>
+
+        </div>
+      </div>
+      <h3 class="panel-title"><i class="fa fa-exclamation-circle" style="color:#dd4b39"></i>&nbsp请登录网页查看下级子活动开展情况</h3>
+  		<hr>
+      </div>
+
+      <div class="btn-group justified nav-tabs">
+        <a ui-set="{'activeTab': 1}" 
+            ui-class="{'active': activeTab == 1}" class="btn btn-default">活动详情</a>
+
+        <a ui-set="{'activeTab': 2}" 
+            ui-class="{'active': activeTab == 2}" class="btn btn-default">反馈详情</a>
+
+        <a ui-set="{'activeTab': 3}" 
+            ui-class="{'active': activeTab == 3}" class="btn btn-default">子活动详情</a>
+      </div> 
+
+    </div>
+  </div>
+</div>
+	
+<div ui-content-for="modals">
+  <div ng-include="'templates/modal1.html'"></div>
+</div>

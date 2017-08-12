@@ -1,0 +1,93 @@
+<div ui-content-for="title">
+  <span>创建我的活动</span>
+</div>
+
+<div class="scrollable">
+  <div class="scrollable-content section">
+    <form name="evntform">
+      <fieldset>
+        <legend>请填写活动详情</legend>
+
+        <div class="form-group">
+          <label>名称</label>
+          <input type="text" class="form-control" ng-model = "evt.name" placeholder="请在这里填写活动的名称" required>
+        </div>
+    
+        <div class="form-group">
+          <label>地点</label>
+          <input type="text" class="form-control" ng-model = "evt.location" placeholder="请在这里填写活动的地点">
+        </div>
+    
+        <div class="form-group">
+          <label>活动开始时间</label>
+          <input type="datetime-local" ng-model = "temp.start_date" class="form-control">
+        </div>
+    
+        <div class="form-group">
+          <label>活动结束时间</label>
+          <input type="datetime-local" ng-model = "temp.end_date" class="form-control">
+        </div>
+
+    
+        <div class="form-group">
+          <label>详细情况</label>
+          <textarea type="text" ng-model="evt.detail" class="form-control">
+          </textarea>
+        </div>
+    
+        <div class="form-group">
+          <label>备注</label>
+          <textarea type="text" ng-model="evt.comment" class="form-control"></textarea>
+        </div>
+    
+        <div class="form-group">
+          <label>部门</label>
+          <input type="text" class="form-control" ng-model="evt.department" placeholder="请在这里填写活动的部门" required>
+        </div>
+        <div class="form-group">
+        <legend>可选择的活动发送范围</legend>
+        <label class="checkbox-inline" ng-repeat="item in postTargetItems"><input type="checkbox" ng-click="toggle(item, postTargetSelected)">
+            {{ postTargetBox[item-1] }}
+        </label>
+        </div>
+
+        <div class="form-group">
+          <legend>活动选项</legend>
+          <label class="checkbox-inline"><input type="checkbox" ng-model="evt.event_qrcode">签到(二维码)</label>
+          <label class="checkbox-inline"><input type="checkbox" ng-model="evt.chat">批复及提问</label>
+          <label class="checkbox-inline"><input type="checkbox" ng-model="evt.feedback" ui-toggle='feedback'>下级反馈</label>
+          <label class="checkbox-inline"><input type="checkbox" ng-model="evt.activity" ui-toggle='activity'>下级创建子活动</label>
+        </div>
+
+        <div class="form-group" ui-state="feedback">
+          <div ng-if="Ui.active('feedback')">
+          <legend>反馈选项</legend>
+            <label class="checkbox-inline"><input type="checkbox" ng-model="evt.recieve">反馈“已收到”</label>
+            <label class="checkbox-inline"><input type="checkbox" ng-model="evt.txt">反馈文本消息</label>
+            <label class="checkbox-inline"><input type="checkbox" ng-model="evt.file">反馈文件</label>
+          </div>
+        </div>
+
+        <div class="form-group" ui-state="activity">
+          <div ng-if="Ui.active('activity')">
+          <legend>子活动选项</legend>
+          <label class="checkbox-inline"><input type="checkbox" ng-model="evt.req_qrcode">签到(二维码)</label>
+          <label class="checkbox-inline"><input type="checkbox" ng-model="evt.req_photo">上传活动照片</label>
+          <label class="checkbox-inline"><input type="checkbox" ng-model="evt.req_report">提交活动总结</label>
+          </div>
+        </div>
+        <div class="form-group">
+          <legend>附件</legend>
+        <upload-file>
+        </upload-file>
+        </div>
+      </fieldset>
+    <hr>
+
+    <button class="btn btn-primary btn-block" ng-click="createevt()" ng-disabled="creatable(evntform.$invalid)">
+      创建
+    </button>
+
+  </form>
+ </div>
+</div>

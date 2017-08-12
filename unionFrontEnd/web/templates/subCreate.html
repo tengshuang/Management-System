@@ -1,0 +1,44 @@
+<md-dialog flex="40" ng-controller="subCreateCtrl" layout="column">
+  <form name = "actiForm" data-ng-submit="createacti(acti)">
+  <md-dialog-content class="md-padding">
+        <md-toolbar class="md-table-toolbar md-primary">
+        <div class="md-toolbar-tools">
+            <md-icon style="color:white" md-svg-src="img/icons-svg/alert/svg/design/ic_warning_24px.svg"></md-icon>
+            <span>创建子活动</span>
+            <div flex></div>
+        </div>
+        </md-toolbar>
+        <div>{{createchild}}</div>
+        <md-input-container class="md-block">
+          <label>子活动名称</label>
+          <input ng-model="acti.name" required>
+        </md-input-container>
+
+        <md-input-container class="md-block">
+          <label>子活动地点</label>
+          <input ng-model="acti.location" required>
+        </md-input-container>
+
+        <div layout-gt-sm="column">
+            <md-input-container flex="50">
+              <label>子活动时间</label>
+              <input ng-model="time_tmp" type = "datetime-local" required>
+            </md-input-container>
+        </div>
+
+        <md-input-container class="md-block">
+          <label>子活动详情</label>
+          <textarea ng-model="acti.detail" aria-lable="" md-maxlength="100" rows="5" md-select-on-focus=""></textarea>
+        </md-input-container>
+    
+       <md-input-container class="md-block">
+          <label>子活动备注</label>
+          <textarea ng-model="acti.comment" aria-lable="" md-maxlength="100" rows="5" md-select-on-focus=""></textarea>
+        </md-input-container>
+  </md-dialog-content>
+  <md-dialog-actions>
+    <md-button type="submit" ng-disabled="actiForm.$invalid" class="md-primary md-raised">创建</md-button>
+    <md-button class="md-raised" ng-click="closeDialog()">取消</md-button>
+  </md-dialog-actions>
+  </form>
+</md-dialog>

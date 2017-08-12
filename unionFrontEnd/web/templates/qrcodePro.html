@@ -1,0 +1,16 @@
+
+<md-dialog flex="40" ng-controller="qrcodeProCtrl">
+	<md-dialog-content layout="column" layout-align="center center">
+		<md-divider></md-divider>
+		<br>
+		<br>
+		<!--<div>{{qrcode}}</div>-->
+		  <qrcode version="{{qrcode.v}}" error-correction-level="{{qrcode.e}}" size="{{qrcode.s}}" data="{{qrcode.foo}}" download></qrcode>
+		 <md-divider></md-divider>
+		 <p>点击二维码即可进行下载</p>
+		 <md-divider></md-divider>
+	</md-dialog-content>
+	<md-dialog-actions>
+    	<md-button class="md-raised" ng-click="closeDialog()">取消</md-button>
+	</md-dialog-actions>
+</md-dialog>

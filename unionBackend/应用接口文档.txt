@@ -1,0 +1,90 @@
+已实现的应用接口
+1、向微信企业号的某个应用发消息
+	从管理员处获得应用名称(app)和应用key(appkey)
+	1）发送纯文本消息
+		第一步：从http://weixin.cic.tsinghua.edu.cn/cop/getTimestamp.php获得服务器时间戳t
+		第二步：key = md5(app + t + appkey)
+		第三步：消息内容：utf8编码，需要urlencode
+		第四步：用户列表为：学号或工作证号，以|分割，发送全体填写@all
+		第五步：post数据到http://weixin.cic.tsinghua.edu.cn/cop/sendmsg.php?app=应用名称&key=计算后的key&timestamp=时间戳t&type=text&msgtype=消息分类
+			post的数据内容为：userlist=用户列表&safe=0&msg=消息内容
+			get参数中msgtype为消息分类，可不写默认为default，应用可自行定义，建议不要有中文，供后期统计过程中使用
+	2）发送带有标题、内容的消息
+		第一步：从http://weixin.cic.tsinghua.edu.cn/cop/getTimestamp.php获得服务器时间戳t
+		第二步：key = md5(app + t + appkey)
+		第三步：组装消息内容：[{"title":"标题","description":"内容"}]，utf8编码，需要urlencode
+		第四步：用户列表为：学号或工作证号，以|分割，发送全体填写@all
+		第五步：post数据到http://weixin.cic.tsinghua.edu.cn/cop/sendmsg.php?app=应用名称&key=计算后的key&timestamp=时间戳t&type=news&msgtype=消息分类
+			post的数据内容为：userlist=用户列表&safe=0&msg=消息内容
+			get参数中msgtype为消息分类，可不写默认为default，应用可自行定义，建议不要有中文，供后期统计过程中使用
+2、菜单
+	设计菜单，通知微信管理员，菜单设计需要按照微信要求，要求如下：
+		目前自定义菜单最多包括3个一级菜单，每个一级菜单最多包含5个二级菜单。一级菜单最多4个汉字，二级菜单最多7个汉字，多出来的部分将会以“...”代替。
+		请注意，创建自定义菜单后，由于微信客户端缓存，需要24小时微信客户端才会展现出来。建议测试时可以尝试取消关注企业号后再次关注，则可以看到创建后的效果。
+	1）点击菜单跳转
+		给出跳转后的url
+		如果需要获取用户身份，则跳转后url需要接收一个HTTP GET参数ticket
+		获取ticket参数后，从http://weixin.cic.tsinghua.edu.cn/cop/getUserInfoFromTicket.php?ticket=$ticket可以获得用户的学号或工作证号
+	2）点击菜单给用户发消息
+		现在支持发送基于文本的消息，需要给出接收点击菜单事件的url地址
+		如果需要获得用户身份，则接收点击菜单事件的url需要接收一个HTTP GET参数ticket
+		获取ticket参数后，从http://weixin.cic.tsinghua.edu.cn/cop/getUserInfoFromTicket.php?ticket=$ticket可以获得用户的学号或工作证号
+		给用户发送的消息需要在此url的标准输出中输出。输出内容为utf8编码。
+	3）点击菜单出现二维码扫码框
+		给出接收二维码扫码后消息的url地址
+		如果需要获得用户身份，则接收扫码事件的url需要接收一个HTTP GET参数ticket
+		获取ticket参数后，从http://weixin.cic.tsinghua.edu.cn/cop/getUserInfoFromTicket.php?ticket=$ticket可以获得用户的学号或工作证号
+		从POST参数content中获得扫描二维码内容
+		应用自行处理业务，处理后如需给用户反馈消息则需要在此url的标准输出中输出。输出内容为utf8编码。
+3、消息处理
+	现阶段系统支持用户向应用发送基于文本的消息，系统以回调方式将消息发送给应用，应用处理后返回给微信用户
+	首先，应用将消息处理URL在微信平台中登记
+	如果需要获得用户身份，则接收消息的url需要接收一个HTTP GET参数ticket
+	获取ticket参数后，从http://weixin.cic.tsinghua.edu.cn/cop/getUserInfoFromTicket.php?ticket=$ticket可以获得用户的学号或工作证号
+	微信用户发送的消息内容以http post方式发送给处理url，参数为content
+	给用户发送的消息需要在此url的标准输出中输出。输出内容为utf8编码。
+4、应用人员管理
+	应用默认权限按照部门组织，可以设置某个部门人员对某个应用是否可见。
+	但在复杂业务中，可能需要对应用进行细粒度人员控制，可以通过接口添加、修改、删除某应用的人员。
+	默认微信平台不开通此项功能，需要此项功能需要向微信管理员开通。
+	开通后，应用可通过接口添加、删除和查看此应用的细粒度控制人员（不包含原有设定的组织机构人员）。
+	从管理员处获得应用名称(app)和应用key(appkey)。
+	1）查看应用细粒度控制人员
+		第一步：从http://weixin.cic.tsinghua.edu.cn/cop/getTimestamp.php获得服务器时间戳t
+		第二步：key = md5(app + t + appkey)
+		第三步：get方式请求http://weixin.cic.tsinghua.edu.cn/cop/tag.php?app=应用名称&key=计算后的key&timestamp=时间戳t&action=list
+		即可获得人员列表
+	2）添加应用细粒度控制人员
+		第一步：从http://weixin.cic.tsinghua.edu.cn/cop/getTimestamp.php获得服务器时间戳t
+		第二步：key = md5(app + t + appkey)
+		第三步：post方式请求http://weixin.cic.tsinghua.edu.cn/cop/tag.php?app=应用名称&key=计算后的key&timestamp=时间戳t&action=add
+			post数据内容为：userlist="学工号1","学工号2"……
+	3）删除应用细粒度控制人员
+		第一步：从http://weixin.cic.tsinghua.edu.cn/cop/getTimestamp.php获得服务器时间戳t
+		第二步：key = md5(app + t + appkey)
+		第三步：post方式请求http://weixin.cic.tsinghua.edu.cn/cop/tag.php?app=应用名称&key=计算后的key&timestamp=时间戳t&action=delete
+			post数据内容为：userlist="学工号1","学工号2"……
+5、获得已关注状态
+	通过本接口可以根据证件号获得用户是否关注企业号
+		第一步：从http://weixin.cic.tsinghua.edu.cn/cop/getTimestamp.php获得服务器时间戳t
+		第二步：key = md5(app + t + appkey)
+		第三步：get方式请求http://weixin.cic.tsinghua.edu.cn/cop/getSubscribeStatus.php?app=应用名称&key=计算后的key&timestamp=时间戳t&action=getstatus&zjh=证件号
+	输出结果1为关注，0为未关注
+6、JS API调用相关
+	在调用JS API的时候每次需要进行wx.config，config的js可以通过服务器端调用微信接口获得，方式如下：
+		第一步：从http://weixin.cic.tsinghua.edu.cn/cop/getTimestamp.php获得服务器时间戳t
+		第二步：key = md5(app + t + appkey)
+		第三步：post方式请求http://weixin.cic.tsinghua.edu.cn/cop/getJsConfig.php?app=应用名称&key=计算后的key&timestamp=时间戳t
+			具体参数为url使用js api的URL，debug(true,false，是否启用debug)，jsApiList 权限列表，具体权限见JS API说明
+7、下载上传临时文件
+	通过本接口可根据一个media id获得媒体文件内容
+		第一步：从http://weixin.cic.tsinghua.edu.cn/cop/getTimestamp.php获得服务器时间戳t
+		第二步：key = md5(app + t + appkey)
+		第三步：get方式请求http://weixin.cic.tsinghua.edu.cn/cop/getTempMedia.php?app=应用名称&key=计算后的key&timestamp=时间戳t&mediaid=媒体文件id
+	输出为文件内容
+8、下载上传的临时图片缩略图
+	通过本接口可根据一个media id获得图片的缩略图
+		第一步：从http://weixin.cic.tsinghua.edu.cn/cop/getTimestamp.php获得服务器时间戳t
+		第二步：key = md5(app + t + appkey)
+		第三步：get方式请求http://weixin.cic.tsinghua.edu.cn/cop/resizeImg.php?app=应用名称&key=计算后的key&timestamp=时间戳t&mediaid=媒体文件id
+	输出为缩略图内容

@@ -1,0 +1,284 @@
+<event-detail>
+</event-detail>
+<md-card>
+    <md-toolbar class="md-table-toolbar md-warn">
+        <div class="md-toolbar-tools">
+            <md-icon aria-lable="close" style="color:white" md-svg-src="img/icons-svg/communication/svg/design/ic_chat_24px.svg"></md-icon>
+            <span>管理</span>
+            <div flex></div>
+        </div>
+    </md-toolbar>
+    <md-button aria-lable="close" ng-show="!event_union.status" class="md-primary" ng-click="end_event()">
+        结束本次活动
+    </md-button>
+    <md-button aria-lable="close" ng-show="event_union.status" ng-disabled = "true" class="md-warn">
+        本次活动已结束
+        <md-button class = "md-primary" ng-click="exportExcel()">
+            导出签到人员表
+        </md-button>
+    </md-button>
+
+    <md-divider></md-divider>
+
+    <md-button ng-if="event_union.event_qrcode" ng-click="downloadQrcode($event)" class="md-primary">
+        <md-icon class="md-warn" md-svg-src="img/icons-svg/image/svg/design/ic_blur_on_24px.svg"></md-icon>
+        下载二维码
+    </md-button>
+
+</md-card>
+ <!--aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa-->
+
+<div ng-show = "event_union.chat">
+<md-card ng-hide="event_union.status">
+    <md-toolbar class="md-table-toolbar">
+        <div class="md-toolbar-tools">
+            <md-icon style="color:white" md-svg-src="img/icons-svg/communication/svg/design/ic_chat_24px.svg"></md-icon>
+            <span>批复</span>
+            <div flex></div>
+        </div>
+    </md-toolbar>
+
+    <md-content>
+    <md-list>
+      <md-subheader class="md-no-sticky">如果您有问题，可以在这里提问</md-subheader>
+      <md-divider></md-divider>
+      <md-list-item class="md-3-line md-long-text" ng-repeat="item in todos">
+
+        <user-avatar ng-show="identify(item.user_id)"></user-avatar>
+        <res-avatar ng-hide="identify(item.user_id)"></res-avatar>
+        <div class="md-list-item-text">
+          <p>{{ item.realname }}</strong>&nbsp{{item.time|asDate|date:'yyyy-MM-dd HH:mm'}}</p>
+          <h3><strong>{{item.content}}</h3>
+        </div>
+        <md-divider></md-divider>
+      </md-list-item>
+    </md-list>
+  </md-content>
+
+    <div layout="row">
+        <md-input-container flex>
+            <label>请在此处输入</label>
+            <input type="text" ng-model = "message">
+        </md-input-container>
+        <md-button flex = "5" style="height:10px" ng-click = "question(message)" class="md-primary md-raised">
+            发送
+        </md-button>
+    </div>
+
+</md-card>
+</div>
+<div>
+<md-card ng-if="event_union.feedback">
+    <md-toolbar class="md-table-toolbar">
+        <div class="md-toolbar-tools">
+            <md-icon aria-lable="close" style="color:white" md-svg-src="img/icons-svg/communication/svg/design/ic_chat_24px.svg"></md-icon>
+            <span>反馈情况</span>
+            <div flex></div>
+        </div>
+    </md-toolbar>
+    <div layout="row" ng-if="initialized">
+        <div ng-if="event_union.recieve">
+        <fusioncharts 
+        type="pie3d"
+        datasource="{{respondSource}}",
+        id="chart1"
+        events="events"
+        ></fusioncharts>
+        </div>
+        <div ng-if="event_union.txt">
+        <fusioncharts 
+        type="pie3d"
+        id="chart2"
+        datasource="{{respondtxt}}",
+        events="events"
+        ></fusioncharts>
+        </div>
+        <div ng-if="event_union.file">
+        <fusioncharts 
+        type="pie3d"
+        id="chart3"
+        datasource="{{respondfile}}",
+        events="events"
+        ></fusioncharts>
+        </div>
+    </div>
+</md-card>
+
+<md-card ng-if="event_union.activity">
+    <md-toolbar class="md-table-toolbar">
+        <div class="md-toolbar-tools">
+            <md-icon aria-lable="close" style="color:white" md-svg-src="img/icons-svg/communication/svg/design/ic_chat_24px.svg"></md-icon>
+            <span>子活动情况</span>
+            <div flex></div>
+        </div>
+    </md-toolbar>
+    <div layout="row" ng-if="initialized">
+        <div ng-if="event_union.activity">
+        <fusioncharts 
+        id="chart4"
+        type="pie3d"
+        datasource="{{respondactiv}}",
+        events="events"
+        ></fusioncharts>
+        </div>
+        <div ng-if="event_union.req_photo">
+        <fusioncharts 
+        id="chart5"
+        type="pie3d"
+        datasource="{{respondactivpic}}",
+        events="events"
+        ></fusioncharts>
+        </div>
+        <div ng-if="event_union.req_report">
+        <fusioncharts 
+        id="chart6"
+        type="pie3d",
+        datasource="{{respondactivfile}}",
+        events="events"
+        ></fusioncharts>
+        </div>
+    </div>
+</md-card>
+
+<md-card ng-show="show_list(event_union.activity,event_union.feedback,event_union.chat)">
+    <md-toolbar class="md-table-toolbar">
+        <div class="md-toolbar-tools">
+            <md-icon aria-lable="close" style="color:white" md-svg-src="img/icons-svg/communication/svg/design/ic_chat_24px.svg"></md-icon>
+            <span>成员列表</span>
+            <div flex></div>
+        </div>
+    </md-toolbar>
+
+    <md-divider></md-divider>
+    <div layout="row">
+        <md-input-container flex>
+            <label>请在此处搜索成员</label>
+            <input type="text" ng-model="searchMember">
+        </md-input-container>
+        <!--
+        <md-button aria-lable="close" flex = "5" style="height:10px" ng-click = "kashdfkasjdflkaj()" class="md-primary md-raised">
+            <md-icon aria-lable="close" class = "md-green" md-svg-src="img/icons-svg/action/svg/design/ic_search_24px.svg"></md-icon>
+        </md-button>
+        -->
+    </div>
+
+    <md-divider></md-divider>
+
+    <br>
+    <br>
+    <md-table-container>
+        <table md-table>
+            <thead md-head>
+              <tr md-row>
+                <th md-column><strong>名称</strong></th>
+                <th md-column ng-show="event_union.recieve"><strong>反馈情况</strong></th>
+                <th md-column ng-show="event_union.txt"><strong>反馈文本信息</strong></th>
+                <th md-column ng-show="event_union.file"><strong>反馈文件</strong></th>
+                <th md-column ng-show="event_union.activity"><strong>子活动详情</strong></th>
+                <th md-column ng-show="event_union.activity"><strong>子活动状态</strong></th>
+                <th md-column ng-show="event_union.req_qrcode"><strong>子活动签到情况</strong></th>
+                <th md-column ng-show="event_union.req_photo"><strong>子活动照片</strong></th>
+                <th md-column ng-show="event_union.req_report"><strong>子活动总结</strong></th>
+              </tr>
+            </thead>
+            <tbody md-body>
+                <tr md-row ng-repeat="person in child_list | userFilter:searchMember">
+                    <td md-cell><strong>{{ person.realname }}</strong></td>
+                    <td md-cell ng-show="event_union.recieve">
+                        <div ng-hide="event_union.status">
+                        <strong ng-show="person.is_reply">已收到</strong>
+                        <strong ng-hide="person.is_reply">未收到</strong>
+                        <md-button aria-lable="close" ng-hide="person.is_reply" ng-click="inform_again(person.id)">
+                            <md-icon aria-lable="close" class = "md-primary" md-svg-src="img/icons-svg/hardware/svg/design/ic_cast_24px.svg"></md-icon>
+                            再次通知
+                        </md-button>
+                        </div>
+                        <span ng-show="event_union.status">活动已结束</span>
+                    </td>
+                    <td md-cell ng-show="event_union.txt">
+                        <md-button aria-lable="close" ng-click="showReplyContent(person.reply_content,'内容')" ng-show="!empty(person.reply_content)">
+                            <md-icon aria-lable="close" class = "md-primary" md-svg-src="img/icons-svg/image/svg/design/ic_remove_red_eye_24px.svg"></md-icon>
+                            查看
+                        </md-button>
+                        <md-button aria-lable="close" ng-disabled = "true" ng-show="empty(person.reply_content)">
+                            <md-icon aria-lable="close" class = "md-primary" md-svg-src="img/icons-svg/content/svg/design/ic_remove_24px.svg"></md-icon>
+                            未回复
+                        </md-button>
+                    </td>
+                    <td md-cell ng-show="event_union.file">
+                        <md-button aria-lable="close" ng-click = "download(person.reply_file)" ng-disabled = "empty(person.reply_file)">
+                            <md-icon aria-lable="close" class = "md-primary" md-svg-src="img/icons-svg/file/svg/design/ic_file_download_24px.svg"></md-icon>
+                            下载文件
+                        </md-button>
+                    </td>
+                    <td md-cell ng-show="event_union.activity">
+                        <md-button aria-lable="close" ng-click="activityShow(person)" ng-show="person.activity_created">
+                            <md-icon aria-lable="close" class = "md-primary" md-svg-src="img/icons-svg/image/svg/design/ic_remove_red_eye_24px.svg"></md-icon>
+                            查看
+                        </md-button>
+                        <md-button aria-lable="close" ng-disabled="true" ng-hide="person.activity_created">
+                            <md-icon aria-lable="close" md-svg-src="img/icons-svg/content/svg/design/ic_remove_24px.svg"></md-icon>
+                        </md-button> 
+                    </td>
+
+                    <td md-cell ng-show="event_union.activity">
+                        <span ng-if="person.activity_created">正在进行</span>
+                        <span ng-show="person.status">已结束</span>
+                        <span ng-if="!person.activity_created && !person.status">未创建</span>
+                    </td>
+
+                    <td md-cell ng-show="event_union.req_qrcode">
+                        <md-button aria-lable="close" ng-click="showCheckin(person.id)" ng-show="person.activity_created">
+                            <md-icon aria-lable="close" class = "md-primary" md-svg-src="img/icons-svg/image/svg/design/ic_remove_red_eye_24px.svg"></md-icon>
+                            查看
+                        </md-button>
+                    </td>
+                    <td md-cell ng-show="event_union.req_photo">
+                        <md-button aria-lable="close" ng-click = "download(person.photo_file)"ng-disabled="empty(person.photo_file)">
+                            <md-icon aria-lable="close" class = "md-primary" md-svg-src="img/icons-svg/image/svg/design/ic_photo_24px.svg"></md-icon>
+                            下载
+                        </md-button>
+                    </td>
+                    <td md-cell ng-show="event_union.req_report">
+                        <md-button aria-lable="close" ng-click = "download(person.report_file)" ng-disabled="empty(person.report_file)">
+                            <md-icon aria-lable="close" class = "md-primary" md-svg-src="img/icons-svg/file/svg/design/ic_file_download_24px.svg"></md-icon>
+                            下载
+                        </md-button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </md-table-container>
+</md-card>
+
+
+<md-card ng-show="event_union.event_qrcode">
+    <md-toolbar class="md-table-toolbar">
+        <div class="md-toolbar-tools">
+            <md-icon style="color:white" md-svg-src="img/icons-svg/communication/svg/design/ic_chat_24px.svg"></md-icon>
+            <span>已签到的人员</span>
+            <div flex></div>
+        </div>
+    </md-toolbar>
+    <md-button class="md-warn" ng-click="downloadXlsx()">导出为excel</md-button>
+    <md-table-container>
+        <table md-table>
+            <thead md-head>
+              <tr md-row>
+                <th md-column><strong>姓名</strong></th>
+                <th md-column><strong>工作证号</strong></th>
+                <th md-column><strong>部门</strong></th>
+              </tr>
+            </thead>
+            <tbody md-body>
+                <tr md-row ng-repeat="person in signed_list">
+                    <td md-cell><strong>{{ person.realname }}</strong></td>
+                    <td md-cell><strong>{{ person.no }}</strong></td>
+                    <td md-cell><strong>{{ person.belongs }}</strong></td>
+                </tr>
+            </tbody>
+        </table>
+    </md-table-container>
+</md-card>
+
+

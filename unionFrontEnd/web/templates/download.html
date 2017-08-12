@@ -1,0 +1,13 @@
+<md-card>
+	<md-toolbar class="md-table-toolbar">
+        <div class="md-toolbar-tools">
+            <md-icon style="color:white" md-svg-src="img/icons-svg/file/svg/design/ic_file_download_24px.svg"></md-icon>
+            <span>下载文件</span>
+            <div flex></div>
+        </div>
+    </md-toolbar>
+    <span><strong>文件名：</strong>{{file.filename}}</span>
+    <md-button href = {{file.url}} class='md-primary'>
+    	点此进行下载
+	</md-button>
+</md-card>

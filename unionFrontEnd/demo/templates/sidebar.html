@@ -1,0 +1,16 @@
+<div class="scrollable">
+  <h1 class="scrollable-header app-name">清华大学工会活动平台</h1>  
+  <div class="scrollable-content">
+    <div class="list-group" ui-turn-off='uiSidebarLeft'>
+      <strong>{{current_user.realname}}</strong>
+      <strong>{{current_user.no}}</strong>
+      <a class="list-group-item" href="demo/#/">主页<i class="fa fa-chevron-right pull-right"></i></a>
+      <div ng-if="current_user.is_root">
+      <a class="list-group-item" href="demo/#/create">创建我的活动<i class="fa fa-chevron-right pull-right"></i></a>
+      <a class="list-group-item" href="demo/#/list_top">我创建的活动列表<i class="fa fa-chevron-right pull-right"></i></a>
+      </div>
+      <a class="list-group-item" href="demo/#/list">我收到的活动列表<i class="fa fa-chevron-right pull-right"></i></a>
+      <a class="list-group-item" href="demo/#/list_bottom">我创建的子活动列表<i class="fa fa-chevron-right pull-right"></i></a>
+    </div>
+  </div>
+</div>

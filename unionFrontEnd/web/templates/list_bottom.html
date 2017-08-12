@@ -1,0 +1,87 @@
+<md-card>
+    <md-toolbar layout="column" class="md-tall"><span flex="flex"></span>
+      <div class="md-toolbar-tools">
+        <div layout="row" flex="flex" class="fill-height">
+            <div class="md-tools-title">
+                <span ng-click="toggleSearch = !toggleSearch"><md-tooltip>
+                点此进行活动搜索
+            </md-tooltip>活动列表</span>
+            </div>
+            <span flex="flex" ng-hide="toggleSearch"></span>
+            <md-input-container flex="flex" style="padding-left:30px;" ng-show="toggleSearch">
+                <input type="text" class="md-white-input" ng-model="search"/>
+                <md-tooltip>
+                    在此处输入想要查找的活动
+                </md-tooltip>
+            </md-input-container>
+        </div>
+        <md-button ng-click="toggleSearch = !toggleSearch" class="md-fab">
+            <md-icon md-svg-src="img/icons-svg/action/svg/design/ic_search_24px.svg"></md-icon>
+            <md-tooltip>
+                点此进行活动搜索
+            </md-tooltip>
+        </md-button>
+      </div>
+
+    </md-toolbar>
+
+	<md-table-container>
+		<table md-table>
+            <thead md-head>
+              <tr md-row>
+                <th md-column><span>名称</span></th>
+                <th md-column><span>部门</span></th>
+                <th md-column><span>所属</span></th>
+                <th md-column><span>时间</span></th>
+                <th md-column><strong>地点</strong></th>
+                <th md-column><span>签到（二维码）</span></th>
+                <th md-column><span>状态</span></th>
+                <th md-column><span>附件</span></th>
+                <th md-column><span>更多</span></th>
+
+              </tr>
+            </thead>
+            <tbody md-body>
+            	<tr md-row ng-repeat="act in activity_union | listFilter:search">
+                	<td md-cell><strong>{{ act.name }}</strong></td>
+                	<td md-cell><strong>{{ act.department }}</strong></td>
+                	<td md-cell><strong>{{ act.belongs }}</strong></td>
+                	<td md-cell ng-hide="empty(act.tim)">
+                        <strong>{{ act.tim|asDate|date:'yyyy-MM-dd HH:mm' }}</strong>
+                    </td>
+                    <td md-cell ng-show="empty(act.tim)">
+                        <md-icon md-svg-src="img/icons-svg/content/svg/design/ic_remove_24px.svg"></md-icon>
+                    </td>
+                    <td md-cell ng-hide="empty(act.location)"><strong>{{ act.location }}</strong></td>
+                    <td md-cell ng-show="empty(act.location)">
+                        <md-icon md-svg-src="img/icons-svg/content/svg/design/ic_remove_24px.svg"></md-icon>
+                    </td>
+                	<td md-cell>
+                		<span ng-show="act.req_qrcode">
+							<md-icon class = "md-green" md-svg-src="img/icons-svg/action/svg/design/ic_done_24px.svg"></md-icon>
+						</span>
+						<span ng-show="!act.req_qrcode">
+							<md-icon class = "md-warn" md-svg-src="img/icons-svg/navigation/svg/design/ic_close_24px.svg"></md-icon>
+						</span>
+                	</td>
+                	<td md-cell>
+                		<strong ng-hide="act.status">进行中</strong>
+                        <strong ng-show="act.status">已结束</strong>
+                	</td>
+                    <td md-cell>
+                        <!--<strong>{{ act.file }}</strong>-->
+                        <md-button ng-click="download(act.attachment)" ng-disabled="act.attachment == -1" class="md-primary">
+                            <md-icon class = "md-warn" md-svg-src="img/icons-svg/file/svg/design/ic_file_download_24px.svg"></md-icon>下载
+                        </md-button>
+                    </td>
+                    <td md-cell>
+                        <md-button href = {{act.jump_link}} class="md-primary">
+                            <md-icon class = "md-warn" md-svg-src="img/icons-svg/image/svg/design/ic_remove_red_eye_24px.svg"></md-icon>详情
+                        </md-button>
+                    </td>
+				</tr>
+            </tbody>
+        </table>
+    </md-table-container>
+
+</md-card>

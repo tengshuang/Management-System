@@ -1,0 +1,22 @@
+<div ui-content-for="title">
+  <span>{{title}}</span>
+</div>
+
+<div class="scrollable" ui-state="searchBar">
+  <input ng-if="Ui.active('searchBar')" type="search" ng-model ="$parent.test_ts" class="form-control scrollable-header" placeholder="搜索.." />
+
+  <div class="scrollable-content" ui-scroll-bottom='bottomReached()'>
+    <div class="list-group">
+      <a ng-repeat="item in allAct | filter:test_ts" href={{item.jump_link}} class="list-group-item">
+        {{ item.name }} <i class="fa fa-chevron-right pull-right"></i>
+      </a>
+    </div>
+  </div>
+
+  <a class="btn btn-block btn-lg btn-primary scrollable-footer" ui-toggle='searchBar'>
+    <i class="fa fa-search"></i> 
+    <span ui-hide="searchBar">显示</span>
+    <span ui-show="searchBar">隐藏</span>
+  搜索栏
+  </a>
+</div>

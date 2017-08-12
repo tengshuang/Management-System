@@ -1,0 +1,46 @@
+<md-card>
+    <md-toolbar class="md-table-toolbar">
+        <div class="md-toolbar-tools">
+            <md-icon style="color:white" md-svg-src="img/icons-svg/action/svg/design/ic_dashboard_24px.svg"></md-icon>
+            <span>子活动详情</span>
+            <div flex></div>
+        </div>
+    </md-toolbar>
+    <md-table-container>
+        <table md-table>
+            <tbody md-body>
+                <tr md-row>
+                    <td md-cell><strong>名称</strong></td>
+                    <td md-cell>{{detail.name}}</td>
+                    <td md-cell><strong>地点</strong></td>
+                    <td md-cell>{{detail.location}}</td>
+                </tr>
+                <tr md-row>
+             
+                    <td md-cell><strong>时间</strong></td>
+                    <td md-cell>{{detail.tim}}</td>
+                    <td md-cell><strong>所属</strong></td>
+                    <td md-cell>{{detail.belongs}}</td>
+                </tr>
+
+                <tr md-row>
+                    <td md-cell><strong>详情</strong></td>
+                    <td md-cell>
+                        <!--<p>{{detail.detail}}</p>-->
+                        <md-input-container class="md-block">
+                            <textarea readonly="value">{{detail.detail}}
+                            </textarea>
+                        </md-input-container>
+                    </td>
+                </tr>
+
+                <tr md-row>
+                    <td md-cell><strong>备注</strong></td>
+                    <td md-cell>
+                        <p>{{detail.comment}}</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </md-table-container>
+</md-card>

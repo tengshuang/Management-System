@@ -1,0 +1,271 @@
+<event-detail>
+</event-detail>
+
+<md-card ng-show="event_union.status">
+    <md-toolbar class="md-table-toolbar md-warn">
+        <div class="md-toolbar-tools">
+            <md-icon style="color:white" md-svg-src="img/icons-svg/alert/svg/design/ic_warning_24px.svg"></md-icon>
+            <span>本次活动已经结束，您无法更改</span>
+            <div flex></div>
+        </div>
+    </md-toolbar>
+</md-card>
+<md-card width="50%" ng-hide="event_union.status">
+    <md-toolbar class="md-table-toolbar md-warn">
+        <div class="md-toolbar-tools">
+            <md-icon style="color:white" md-svg-src="img/icons-svg/alert/svg/design/ic_warning_24px.svg"></md-icon>
+            <span>以下内容请注意填写</span>
+            <div flex></div>
+        </div>
+    </md-toolbar>
+    <md-table-container>
+        <table md-table>
+            <tbody md-body>
+                <tr md-row>
+                    <td md-cell><strong>活动附件</strong></td>
+                    <td md-cell layout="column">
+                        <md-button ng-hide="event_union.attachment == -1" ng-click="download(event_union.attachment)" class="md-primary">
+                            点此下载
+                        </md-button>
+
+                        <span ng-show="event_union.attachment == -1">无附件</span>
+
+                    </td>
+                </tr>
+                <tr md-row ng-show="event_union.recieve">
+                    <td md-cell><strong>反馈收到情况</strong></td>
+                    <td md-cell layout="column">
+                        <md-button ng-hide="activity_union.is_reply" ng-click="Feed()"class="md-warn">已收到请点此处</md-button>
+                        <md-button ng-disabled = "activity_union.is_reply" ng-show="activity_union.is_reply" class="md-primary">向上级答复成功</md-button>
+                    </td>
+                </tr>
+                <tr md-row ng-show="event_union.txt">
+                    <td md-cell><strong>反馈纯文字消息</strong></td>
+                    <td md-cell ng-show="empty(activity_union.reply_content)" layout="row">
+                        <md-input-container flex>
+                            <label>提交活动要求的内容</label>
+                            <input type="txt" ng-model="txtContent">
+                        </md-input-container>
+                        <md-button ng-click="reqSubmit(txtContent)" class="md-primary md-raised">
+                            回复
+                        </md-button>
+                    </td>
+                    <td md-cell ng-hide="empty(activity_union.reply_content)" layout="row">
+                        <span>{{activity_union.reply_content}}</span>
+                    </td>
+                </tr>
+                <tr md-row ng-show="event_union.file">
+                    <td md-cell><strong>反馈文件</strong></td>
+                    <td md-cell>
+                        <md-button ng-hide="empty(activity_union.reply_file)" ng-click="download(activity_union.reply_file)">
+                            点击下载已反馈的文件
+                        </md-button>
+                        <upload-file table="{{relyFileTable}}" key="{{relyFileKey}}" id="{{activity_id}}">
+                        </upload-file>
+                    </td>
+                </tr>
+                <tr md-row>
+                    <td md-cell><strong>您的身份</strong></td>
+                    <td md-cell ng-show="reqContent.role">
+                        管理者
+                        <md-button class="md-primary" ng-click="addPerson($event)">
+                            <md-icon md-svg-src="img/icons-svg/social/svg/design/ic_group_add_24px.svg"></md-icon>
+                            授权其他管理者
+                        </md-button>
+                    </td>
+                    <td md-cell ng-hide="reqContent.role">
+                        接收者
+                    </td>
+                </tr>
+
+                <tr md-row ng-show="event_union.activity">
+                    <td md-cell><strong>通知成员</strong></td>
+                    <td md-cell ng-hide="activity_union.activity_created">
+                        <md-button class="md-primary" ng-click="groupforward($event)">
+                            <md-icon md-svg-src="img/icons-svg/content/svg/design/ic_mail_24px.svg"></md-icon>
+                            创建子活动并群发
+                        </md-button>
+                    </td>
+                    <td md-cell ng-show="activity_union.activity_created">
+                        <md-button ng-disabled = "true" class="md-primary">
+                            已经创建子活动并群发
+                        </md-button>
+                    </td>
+                </tr>
+
+                <tr md-row ng-show='event_union.req_qrcode'>
+                    <td md-cell><strong>子活动二维码</strong></td>
+                    <td md-cell>
+                        <md-button ng-if="activity_union.activity_created" ng-click="downloadQrcode($event)" class="md-primary">
+                            <md-icon class="md-warn" md-svg-src="img/icons-svg/image/svg/design/ic_blur_on_24px.svg"></md-icon>
+                            下载二维码
+                        </md-button>
+                        <strong ng-if="!activity_union.activity_created">请先创建子活动</strong>
+                    </td>
+                </tr>
+
+                <tr md-row ng-show='event_union.req_photo'>
+                    <td md-cell><strong>上传子活动照片</strong></td>
+                    <td md-cell>
+                        <md-button ng-hide="empty(activity_union.photo_file)" ng-click="download(activity_union.photo_file)">
+                            点击下载已反馈的照片
+                        </md-button>
+                        <upload-file ng-if="activity_union.activity_created" table="{{reqPhotoTable}}" key="{{reqPhotoKey}}" id="{{activity_id}}">
+                        </upload-file>
+                        <strong ng-if="!activity_union.activity_created">请先创建子活动</strong>
+                    </td>
+                </tr>
+
+                <tr md-row ng-show='event_union.req_report'>
+                    <td md-cell><strong>提交子活动总结</strong></td>
+                    <td md-cell>
+                        <md-button ng-hide="empty(activity_union.report_file)" ng-click="download(activity_union.report_file)">
+                            点击下载已反馈的总结
+                        </md-button>
+                        <upload-file ng-if="activity_union.activity_created" table="{{reqReportTable}}" key="{{reqReportKey}}" id="{{activity_id}}">
+                        </upload-file>
+                        <strong ng-if="!activity_union.activity_created">请先创建子活动</strong>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+    </md-table-container>
+</md-card>
+
+<div ng-show = "event_union.chat">
+<md-card ng-hide="event_union.status">
+    <md-toolbar class="md-table-toolbar">
+        <div class="md-toolbar-tools">
+            <md-icon style="color:white" md-svg-src="img/icons-svg/communication/svg/design/ic_chat_24px.svg"></md-icon>
+            <span>批复及提问</span>
+            <div flex></div>
+        </div>
+    </md-toolbar>
+
+    <md-content>
+    <md-list>
+      <md-subheader class="md-no-sticky">如果您有问题，可以在这里提问</md-subheader>
+      <md-divider></md-divider>
+      <md-list-item class="md-3-line md-long-text" ng-repeat="item in todos">
+
+        <user-avatar ng-if="identify(item.user_id)"></user-avatar>
+        <res-avatar ng-if="!identify(item.user_id)"></res-avatar>
+        <div class="md-list-item-text">
+          <p>{{ item.realname }}&nbsp{{item.time|asDate|date:'yyyy-MM-dd HH:mm'}}</p>
+          <h3><strong>{{item.content}}</strong></h3>
+        </div>
+        <md-divider></md-divider>
+      </md-list-item>
+    </md-list>
+  </md-content>
+
+    <div layout="row">
+        <md-input-container flex>
+            <label>请在此处输入</label>
+            <input type="text" ng-model = "message">
+        </md-input-container>
+        <md-button flex = "5" style="height:10px" ng-click = "question(message)" class="md-primary md-raised">
+            发送
+        </md-button>
+    </div>
+
+</md-card>
+</div>
+
+<div ng-hide = "event_union.status">
+<md-card ng-show="event_union.req_qrcode">
+    <md-toolbar class="md-table-toolbar md-warn">
+        <div class="md-toolbar-tools">
+            <md-icon style="color:white" md-svg-src="img/icons-svg/communication/svg/design/ic_chat_24px.svg"></md-icon>
+            <span>手动签到</span>
+            <div flex></div>
+        </div>
+    </md-toolbar>
+
+    <md-divider></md-divider>
+    <div layout="row">
+        <md-input-container flex>
+            <label>请在此处搜索人</label>
+            <input type="text" ng-model = "searchPerson">
+        </md-input-container>
+        <md-button flex = "5" style="height:10px" ng-click = "search(searchPerson)" class="md-primary md-raised">
+            <md-icon class = "md-green" md-svg-src="img/icons-svg/action/svg/design/ic_search_24px.svg"></md-icon>
+        </md-button>
+    </div>
+
+    <md-divider></md-divider>
+
+    <h3 class="md-title">以下人员将手动</h2>
+    <div layout="row">
+        <md-chips ng-model="handlist" readonly="readonly" md-on-remove="remove($index)" flex>
+        </md-chips>
+        <md-dialog-actions>
+           <md-button ng-click = "finish()" class="md-primary">
+                <md-icon class = "md-green" md-svg-src="img/icons-svg/action/svg/design/ic_done_all_24px.svg"></md-icon>
+                确定
+            </md-button>
+        </md-dialog-actions>
+    </div>
+
+    <br>
+    <br>
+    <md-table-container>
+        <table md-table>
+            <thead md-head>
+              <tr md-row>
+                <th md-column><strong>姓名</strong></th>
+                <th md-column><strong>工作证号</strong></th>
+                <th md-column><strong>部门</strong></th>
+                <th md-column><strong>操作</strong></th>
+              </tr>
+            </thead>
+            <tbody md-body>
+                <tr md-row ng-repeat="person in sign_list">
+                    <td md-cell><strong>{{ person.realname }}</strong></td>
+                    <td md-cell><strong>{{ person.no }}</strong></td>
+                    <td md-cell><strong>{{ person.belongs }}</strong></td>
+                    <td md-cell>
+                        <md-button ng-click="add($index)">
+                            <md-icon class = "md-green" md-svg-src="img/icons-svg/social/svg/design/ic_person_add_24px.svg"></md-icon>
+                            添加
+                        </md-button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </md-table-container>
+</md-card>
+
+<md-card ng-show="event_union.req_qrcode">
+    <md-toolbar class="md-table-toolbar">
+        <div class="md-toolbar-tools">
+            <md-icon style="color:white" md-svg-src="img/icons-svg/communication/svg/design/ic_chat_24px.svg"></md-icon>
+            <span>已签到的人员</span>
+            <div flex></div>
+        </div>
+    </md-toolbar>
+    <md-button class="md-warn" ng-click="downloadXlsx()">导出为excel</md-button>
+    <md-table-container>
+        <table md-table>
+            <thead md-head>
+              <tr md-row>
+                <th md-column><strong>姓名</strong></th>
+                <th md-column><strong>工作证号</strong></th>
+                <th md-column><strong>部门</strong></th>
+                <th md-column><strong>签到方式</strong></th>
+              </tr>
+            </thead>
+            <tbody md-body>
+                <tr md-row ng-repeat="person in signed_list">
+                    <td md-cell><strong>{{ person.realname }}</strong></td>
+                    <td md-cell><strong>{{ person.no }}</strong></td>
+                    <td md-cell><strong>{{ person.belongs }}</strong></td>
+                    <td md-cell><strong>{{ person.checkin_type }}</strong></td>
+                </tr>
+            </tbody>
+        </table>
+    </md-table-container>
+</md-card>
+
+</div>

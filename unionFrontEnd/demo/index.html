@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <base href="/unionFrontend/" />
+    <title>清华大学工会管理系统</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimal-ui" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="yes" />
+    <link rel="shortcut icon" href="/favicon.png" type="image/x-icon" />
+    <link rel="stylesheet" href="dist/css/mobile-angular-ui-hover.min.css" />
+    <link rel="stylesheet" href="dist/css/mobile-angular-ui-base.min.css" />
+    <link rel="stylesheet" href="dist/css/mobile-angular-ui-desktop.min.css" />
+    <link rel="stylesheet" href="demo/demo.css" />
+    <script src="web/lib/node_modules/angular/angular.min.js"></script>
+    <script src="web/lib/node_modules/angular-route/angular-route.js"></script>
+    <script src="web/lib/node_modules/angular-cookies/angular-cookies.min.js"></script>
+    <script src="dist/js/mobile-angular-ui.min.js"></script>
+    <!-- Required to use $touch, $swipe, $drag and $translate services -->
+    <script src="dist/js/mobile-angular-ui.gestures.min.js"></script>
+    <script src="demo/demo.js"></script>
+  </head>
+
+  <body ng-app="MobileAngularUiExamples" ng-controller="MainController" ui-prevent-touchmove-defaults>
+
+    <!-- Sidebars -->
+    <div ng-include="'demo/templates/sidebar.html'" 
+            ui-track-as-search-param='true'
+            class="sidebar sidebar-left" ng-controller="sidebarCtrl"></div>
+
+
+    <div class="app" 
+         ui-swipe-right='Ui.turnOn("uiSidebarLeft")'
+         ui-swipe-left='Ui.turnOff("uiSidebarLeft")'>
+
+      <!-- Navbars -->
+
+      <div class="navbar navbar-app navbar-absolute-top">
+        <div class="navbar-brand navbar-brand-center" ui-yield-to="title">
+          主页
+        </div>
+        <div class="btn-group pull-left">
+          <div ui-toggle="uiSidebarLeft" class="btn sidebar-toggle">
+            <i class="fa fa-bars"></i>菜单
+          </div>
+        </div>
+      </div>
+      <!--
+      <div class="navbar navbar-app navbar-absolute-bottom">
+        <div class="btn-group justified">
+          <a href="/docs" class="btn btn-navbar"><i class="fa fa-home fa-navbar"></i> Docs</a>
+          <a href="#/scroll" class="btn btn-navbar"><i class="fa fa-github fa-navbar"></i> Sources</a>
+          <a href="#/forms" class="btn btn-navbar"><i class="fa fa-exclamation-circle fa-navbar"></i> Issues</a>
+        </div>
+      </div>
+      -->
+      <!-- App Body -->
+      <div class="app-body" ng-class="{loading: loading}">
+        <div ng-show="loading" class="app-content-loading">
+          <i class="fa fa-spinner fa-spin loading-spinner"></i>
+        </div>
+        <div class="app-content">
+          <ng-view></ng-view>
+        </div>
+      </div>
+
+    </div><!-- ~ .app -->
+
+    <div ui-yield-to="modals1"></div>
+    <div ui-yield-to="modals2"></div>
+
+    <script src="web/lib/node_modules/angular-file-upload/dist/angular-file-upload.min.js"></script>
+
+    <!-- Angular qrcode Library -->
+    <script src="web/lib/node_modules/angular-qrcode/angular-qrcode.js"></script>
+    <script src="web/lib/node_modules/qrcode-generator/js/qrcode.js"></script>
+    <script src="web/lib/node_modules/qrcode-generator/js/qrcode_UTF8.js"></script>
+
+    <script src="web/js/services/listService.js"></script>
+    <script src="web/js/services/timeService.js"></script>
+    <script src="web/js/services/httpService.js"></script>
+    
+    <script src="demo/js/services/downloadService.js"></script>
+
+
+    <script src="demo/js/controllers/createCtrl.js"></script>
+    <script src="demo/js/controllers/sidebarCtrl.js"></script>
+    <script src="demo/js/controllers/detailCtrl.js"></script>
+    <script src="demo/js/controllers/homeCtrl.js"></script>
+ 
+    <script src="demo/js/controllers/detail_bottomCtrl.js"></script>
+
+    <script src="demo/js/controllers/detail_topCtrl.js"></script>
+
+    <script src="demo/js/controllers/list_bottomCtrl.js"></script>
+
+    <script src="demo/js/controllers/list_topCtrl.js"></script>
+    <script src="demo/js/controllers/uploadCtrl.js"></script>
+    <script src="demo/js/controllers/listCtrl.js"></script>
+
+
+    <script src="demo/js/directives/uploadDirective.js"></script>
+    <script src="demo/js/directives/carouselDirective.js"></script>
+    <script src="demo/js/directives/carouselItemDirective.js"></script>
+    <script src="demo/js/directives/dragMeDirective.js"></script>
+    <script src="demo/js/directives/dragToDissmissDirective.js"></script>
+    <script src="demo/js/directives/touchareaDirective.js"></script>
+
+  </body>
+</html>

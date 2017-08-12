@@ -1,0 +1,110 @@
+\thusetup{
+  %******************************
+  % 注意：
+  %   1. 配置里面不要出现空行
+  %   2. 不需要的配置信息可以删除
+  %******************************
+  %
+  %=====
+  % 秘级
+  %=====
+  secretlevel={秘密},
+  secretyear={10},
+  %
+  %=========
+  % 中文信息
+  %=========
+  ctitle={基于B/S与C/S混合架构的行政管理系统},
+  cdegree={工学学士},
+  cdepartment={计算机科学与技术系},
+  cmajor={计算机科学与技术},
+  cauthor={滕爽},
+  csupervisor={张小平老师},
+  %cassosupervisor={陈文光教授}, % 副指导老师
+  %ccosupervisor={某某某教授}, % 联合指导老师
+  % 日期自动使用当前时间，若需指定按如下方式修改：
+  % cdate={超新星纪元},
+  %
+  % 博士后专有部分
+  cfirstdiscipline={计算机科学与技术},
+  cseconddiscipline={系统结构},
+  postdoctordate={2009年7月——2011年7月},
+  id={编号}, % 可以留空： id={},
+  udc={UDC}, % 可以留空
+  catalognumber={分类号}, % 可以留空
+  %
+  %=========
+  % 英文信息
+  %=========
+  etitle={An Administrative Management System Based on Mixed B/S and C/S Architecture},
+  % 这块比较复杂，需要分情况讨论：
+  % 1. 学术型硕士
+  %    edegree：必须为Master of Arts或Master of Science（注意大小写）
+  %             “哲学、文学、历史学、法学、教育学、艺术学门类，公共管理学科
+  %              填写Master of Arts，其它填写Master of Science”
+  %    emajor：“获得一级学科授权的学科填写一级学科名称，其它填写二级学科名称”
+  % 2. 专业型硕士
+  %    edegree：“填写专业学位英文名称全称”
+  %    emajor：“工程硕士填写工程领域，其它专业学位不填写此项”
+  % 3. 学术型博士
+  %    edegree：Doctor of Philosophy（注意大小写）
+  %    emajor：“获得一级学科授权的学科填写一级学科名称，其它填写二级学科名称”
+  % 4. 专业型博士
+  %    edegree：“填写专业学位英文名称全称”
+  %    emajor：不填写此项
+  edegree={Bachelor of Engineering},
+  emajor={Computer Science and Technology},
+  eauthor={Teng Shuang},
+  esupervisor={Professor Zhang Xiaoping},
+  % 日期自动生成，若需指定按如下方式修改：
+  % edate={December, 2005}
+  %
+  % 关键词用“英文逗号”分割
+  ckeywords={软件系统, 工程架构},
+  ekeywords={Software System, Engineering Architecture}
+}
+
+% 定义中英文摘要和关键字
+\begin{cabstract}
+  
+  得益于互联网的发展，现在越来越多的行政管理系统采取了无纸化操作的模式。借由互联网的便利性、实时性、安全性和可靠性作为保证，越来越多的行政工作可以在互联网上高效而自动化地进行，并将统计数据以简洁而又精确的形式，通过数据可视化方法直观地呈现。
+
+  得益于智能手机的普及，互联网系统也逐渐向着移动设备靠拢。结合微信或者手机应用这些成熟的开发平台，即使不在电脑旁边，用户也可以及时地收到最新的新闻资讯或者消息通知。
+
+  目前清华大学的公会暂时没有采用无纸化办公的流程。活动发布、人员管理和签到记录暂时还基于传统的工作模式开展进行。基于这个背景，结合清华大学的公会管理流程，本文将提出一个完整的清华大学公会管理系统架构，并给出其实现，与其他的在线行政管理系统进行对比。
+
+  本文的技术重点主要有：
+  \begin{itemize}
+    \item 利用AngularJS单一页面应用程序的开发特性及其MVC框架，优化数据传输、页面显示和可拆装性；
+    \item 使用RSA加密算法在HTTP协议下仍能保证数据安全；
+    \item 基于REST的前后端分离技术，使得一套后端能够服务于复数个前端，增加开发灵活性和可扩展性；
+    \item 微信平台的灵活运用，解决了活动消息通知的“最后一公里”问题。
+  \end{itemize}
+
+  本文将通过引言、现有工作介绍和对比、系统架构、技术难点、系统展示和结论几个方面，来对清华大学工会管理系统进行详细介绍。
+
+\end{cabstract}
+
+% 如果习惯关键字跟在摘要文字后面，可以用直接命令来设置，如下：
+% \ckeywords{\TeX, \LaTeX, CJK, 模板, 论文}
+
+\begin{eabstract}
+   
+  Thanks to the development of the Internet, more and more administrative system tends to take a paperless mode of operation. As a guarantee, more efficient and automate administrative tasks can be carried out by the convenience of the Internet, real-time, security, and reliability on the Internet, with the statistical data be presented by data visualization methods in a concise and precise form.
+
+  With the prevail of smartphones, the Internet system is also gradually move closer toward mobile devices. Combining with mature development platform like WeChat mobile applications, users can timely receive the latest news or message notification even if they are not next to the computer.
+
+  Currently, the Union in Tsinghua University is not utilizing the Internet facility. Publishing activities, personnel management and attendance records are yet based on the traditional mode of operation. Based on this situation, combined with Tsinghua Union management process, this paper will present a fully functional Tsinghua Union management system architecture and its implementation with a compare with previous works.
+
+  Technical focus of this paper are:  
+\begin{itemize}
+    \item Use AngularJS single page development features and MVC application framework, to optimize data transmission, display and dismantling of the page;
+    \item Using the RSA encryption algorithm in the HTTP protocol to ensure data security;
+    \item REST-based technology separates front and back ends, making a backend capable of servicing a plurality of front-end, increase development flexibility and scalability;
+    \item Flexible use of WeChat platform, to solve the \"last kilometer\" challenge of message notification issues.
+\end{itemize}
+
+
+\end{eabstract}
+
+% \ekeywords{\TeX, \LaTeX, CJK, template, thesis}

@@ -1,0 +1,47 @@
+<md-card>
+	<md-toolbar class="md-table-toolbar md-primary">
+        <div class="md-toolbar-tools">
+            <md-icon style="color:white" md-svg-src="img/icons-svg/content/svg/design/ic_redo_24px.svg"></md-icon>
+            <span>更新活动范围分组</span>
+            <div flex></div>
+        </div>
+    </md-toolbar>
+
+    <md-table-container>
+        <table md-table>
+            <tbody md-body>
+                <tr md-row>
+                    <td md-cell>
+                        <strong>已存在的分组</strong>
+                    </td>
+                    <td md-cell>
+                        <md-chips ng-model="catelist" readonly="readonly" md-on-remove="remove_cate($index)" flex>
+                        </md-chips>
+                    </td>
+                </tr>
+                <tr md-row>
+                    <td md-cell>
+                        <strong>设置新的分组</strong>
+                    </td>
+                    <td md-cell>
+                        <md-input-container class = "md-block">
+                            <label>请在这里输入分组名称</label>
+                            <input  type="text" ng-model="listname"/>
+                        </md-input-container>
+                    </td>
+                </tr>
+
+                <tr md-row>
+                    <td md-cell><strong>导入Excel格式名单</strong></td>
+                    <td md-cell>
+                    	<upload-file type="excel">
+                    	</upload-file>	
+                    </td> 
+                </tr>
+
+            </tbody>
+        </table>
+    </md-table-container>
+    <md-button class="md-primary md-raised" ng-click='produceLable(listname)' ng-disabled="submitInvalid()">创建分组
+    </md-button>
+</md-card>

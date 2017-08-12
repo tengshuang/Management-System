@@ -1,0 +1,30 @@
+<md-card>
+	<md-toolbar class="md-table-toolbar md-primary">
+        <div class="md-toolbar-tools">
+            <md-icon style="color:white" md-svg-src="img/icons-svg/content/svg/design/ic_redo_24px.svg"></md-icon>
+            <span>指定管理员</span>
+            <div flex></div>
+        </div>
+    </md-toolbar>
+
+    <md-table-container>
+        <table md-table>
+            <tbody md-body>
+                <tr md-row>
+                    <td md-cell>
+                        <strong>设置新的管理员</strong>
+                    </td>
+                    <td md-cell>
+                        <md-input-container class = "md-block">
+                            <label>请在这里输入工作证号</label>
+                            <input  type="text" ng-model="no" required/>
+                        </md-input-container>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+    </md-table-container>
+    <md-button class="md-primary md-raised" ng-click='addadmin(no)' ng-disabled = "!no">授权
+    </md-button>
+</md-card>

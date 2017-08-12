@@ -1,0 +1,27 @@
+<md-dialog aria-label="签到状态">
+  <md-dialog-content>
+     <md-table-container>
+        <table md-table>
+            <thead md-head>
+              <tr md-row>
+                <th md-column><strong>姓名</strong></th>
+                <th md-column><strong>工作证号</strong></th>
+                <th md-column><strong>部门</strong></th>
+                <th md-column><strong>签到方式</strong></th>
+              </tr>
+            </thead>
+            <tbody md-body>
+                <tr md-row ng-repeat="person in signed_list">
+                    <td md-cell><strong>{{ person.realname }}</strong></td>
+                    <td md-cell><strong>{{ person.no }}</strong></td>
+                    <td md-cell><strong>{{ person.belongs }}</strong></td>
+                    <td md-cell><strong>{{ person.checkin_type }}</strong></td>
+                </tr>
+            </tbody>
+        </table>
+    </md-table-container> 
+  </md-dialog-content>
+  <md-dialog-actions>
+    <md-button ng-click="closeDialog()" class="md-primary">关闭</md-button>
+  </md-dialog-actions>
+</md-dialog>

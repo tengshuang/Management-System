@@ -1,0 +1,108 @@
+
+
+<md-card>
+    <md-toolbar class="md-table-toolbar">
+        <div class="md-toolbar-tools">
+            <md-icon style="color:white" md-svg-src="img/icons-svg/action/svg/design/ic_dashboard_24px.svg"></md-icon>
+            <span>子活动信息</span>
+            <div flex></div>
+        </div>
+    </md-toolbar>
+    <md-table-container>
+        <table md-table>
+            <tbody md-body>
+                <tr md-row>
+                    <td md-cell><strong>名称</strong></td>
+                    <td md-cell>{{$parent.activity_union.name}}</td>
+                    <td md-cell><strong>部门</strong></td>
+                    <td md-cell>{{$parent.event_union.department}}</td>
+                </tr>
+                <tr md-row>
+                    <td md-cell><strong>地点</strong></td>
+                    <td md-cell>{{$parent.activity_union.location}}</td>
+             
+                    <td md-cell><strong>时间</strong></td>
+                    <td md-cell>{{$parent.activity_union.tim}}</td>
+                </tr>
+
+                <tr md-row>
+                    <td md-cell><strong>所属</strong></td>
+                    <td md-cell>{{$parent.activity_union.belongs}}</td>
+                    <td md-cell><strong>签到</strong></td>
+                    <td md-cell>
+                        <!--<p>{{$parent.activity_union.detail}}</p>-->
+                        <span ng-show="$parent.event_union.req_qrcode">
+                            <md-icon class = "md-green" md-svg-src="img/icons-svg/action/svg/design/ic_done_24px.svg"></md-icon>
+                        </span>
+                        <span ng-show="!$parent.event_union.req_qrcode">
+                            <md-icon class = "md-warn" md-svg-src="img/icons-svg/navigation/svg/design/ic_close_24px.svg"></md-icon>
+                        </span>
+                    </td>
+                </tr>
+
+                <tr md-row>
+                    <td md-cell><strong>详情</strong></td>
+                    <td md-cell>
+                        <!--<p>{{$parent.activity_union.detail}}</p>-->
+                        <md-input-container class="md-block">
+                            <textarea readonly="value">{{$parent.activity_union.detail}}
+                            </textarea>
+                        </md-input-container>
+                    </td>
+                </tr>
+
+                <tr md-row>
+                    <td md-cell><strong>备注</strong></td>
+                    <td md-cell>
+                        <p>{{$parent.activity_union.comment}}</p>
+                        <!--<md-input-container class="md-block">
+                            <textarea readonly="value">{{$parent.activity_union.plus}}
+                            </textarea>
+                        </md-input-container>-->
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </md-table-container>
+</md-card>
+
+<md-card ng-show ="$parent.activity_union.role=='管理者'">
+    <md-toolbar class="md-table-toolbar md-warn">
+        <div class="md-toolbar-tools">
+            <md-icon style="color:white" md-svg-src="img/icons-svg/communication/svg/design/ic_chat_24px.svg"></md-icon>
+            <span>管理</span>
+            <div flex></div>
+        </div>
+    </md-toolbar>
+    <md-button ng-hide="is_end($parent.activity_union.status,$parent.event_union.status)" class="md-primary" ng-click="end_activity($parent.activity_union.id)">
+        结束本次活动
+    </md-button>
+    <md-button ng-show="is_end($parent.activity_union.status,$parent.event_union.status)" ng-disabled = "true" class="md-warn">
+        本次活动已结束
+    </md-button>
+</md-card>
+
+<md-card ng-hide ="$parent.activity_union.role=='管理者'">
+    <md-toolbar ng-show="is_end($parent.activity_union.status,$parent.event_union.status)" class="md-table-toolbar md-warn">
+        <div class="md-toolbar-tools">
+            <md-icon style="color:white" md-svg-src="img/icons-svg/communication/svg/design/ic_chat_24px.svg"></md-icon>
+            <span>本次活动已经结束</span>
+            <div flex></div>
+        </div>
+    </md-toolbar>
+</md-card>
+
+<md-card ng-hide="is_end($parent.activity_union.status,$parent.event_union.status)">
+    <md-toolbar class="md-table-toolbar md-warn">
+        <div class="md-toolbar-tools">
+            <md-icon style="color:white" md-svg-src="img/icons-svg/communication/svg/design/ic_chat_24px.svg"></md-icon>
+            <span>本次活动正式进行</span>
+            <div flex></div>
+        </div>
+    </md-toolbar>
+    
+    <md-button ng-click="download($parent.activity_union.attachment)" ng-disabled="$parent.event_union.attachment == -1" class="md-primary">
+        <md-icon class = "md-warn" md-svg-src="img/icons-svg/file/svg/design/ic_file_download_24px.svg"></md-icon>下载活动附件
+    </md-button>
+
+</md-card>

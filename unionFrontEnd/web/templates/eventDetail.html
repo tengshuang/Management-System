@@ -1,0 +1,214 @@
+<md-card>
+    <md-toolbar class="md-table-toolbar">
+        <div class="md-toolbar-tools">
+            <md-icon style="color:white" md-svg-src="img/icons-svg/action/svg/design/ic_dashboard_24px.svg"></md-icon>
+            <span>活动基本信息</span>
+            <div flex></div>
+        </div>
+    </md-toolbar>
+    <md-table-container>
+        <table md-table>
+            <tbody md-body>
+                <tr md-row>
+                    <td md-cell><strong>名称</strong></td>
+                    <td md-cell>{{$parent.event_union.name}}</td>
+                    <td md-cell><strong>部门</strong></td>
+                    <td md-cell>{{$parent.event_union.department}}</td>
+                </tr>
+                <tr md-row>
+                    <td md-cell><strong>地点</strong></td>
+                    <td md-cell ng-hide="$parent.empty($parent.event_union.location)">{{$parent.event_union.location}}</td>
+                    <td md-cell ng-show="$parent.empty($parent.event_union.location)">
+                        <span>
+                            <md-icon md-svg-src="img/icons-svg/content/svg/design/ic_remove_24px.svg"></md-icon>
+                        </span>                  
+                    </td>
+                    <td md-cell><strong>创建时间</strong></td>
+
+                    <td md-cell >
+                        {{$parent.event_union.creation_time|asDate|date:'yyyy-MM-dd HH:mm'}}
+                    </td>
+
+                </tr>
+
+                <tr md-row>
+                    <td md-cell><strong>开始时间</strong></td>
+
+                    <td md-cell ng-hide="$parent.empty($parent.event_union.start_date)">
+                        {{$parent.event_union.start_date|asDate|date:'yyyy-MM-dd HH:mm'}}
+                    </td>
+                    <td md-cell ng-show="$parent.empty($parent.event_union.start_date)">
+                        <span>
+                            <md-icon md-svg-src="img/icons-svg/content/svg/design/ic_remove_24px.svg"></md-icon>
+                        </span>                   
+                    </td>
+                    <td md-cell><strong>结束时间</strong></td>
+                    <td md-cell ng-hide="$parent.empty($parent.event_union.end_date)">
+                        {{$parent.event_union.end_date|asDate|date:'yyyy-MM-dd HH:mm'}}
+                    </td>
+                    <td md-cell ng-show="$parent.empty($parent.event_union.end_date)">
+                        <span>
+                            <md-icon md-svg-src="img/icons-svg/content/svg/design/ic_remove_24px.svg"></md-icon>
+                        </span>                   
+                    </td>
+                </tr>
+
+                <tr md-row>
+                    <td md-cell><strong>签到</strong></td>
+                    <td md-cell>
+                        <span ng-show="$parent.event_union.event_qrcode">
+                            <md-icon class = "md-green" md-svg-src="img/icons-svg/action/svg/design/ic_done_24px.svg"></md-icon>
+                        </span>
+                        <span ng-show="!$parent.event_union.event_qrcode">
+                            <md-icon class = "md-warn" md-svg-src="img/icons-svg/navigation/svg/design/ic_close_24px.svg"></md-icon>
+                        </span>
+                    </td>
+                    <td md-cell><strong>反馈</strong></td>
+                    <td md-cell>
+                        <span ng-show="$parent.event_union.feedback">
+                            <md-icon class = "md-green" md-svg-src="img/icons-svg/action/svg/design/ic_done_24px.svg"></md-icon>
+                        </span>
+                        <span ng-show="!$parent.event_union.feedback">
+                            <md-icon class = "md-warn" md-svg-src="img/icons-svg/navigation/svg/design/ic_close_24px.svg"></md-icon>
+                        </span>
+                    </td>
+                </tr>
+                <tr md-row>
+                    <td md-cell><strong>子活动</strong></td>
+                    <td md-cell>
+                        <span ng-show="$parent.event_union.activity">
+                            <md-icon class = "md-green" md-svg-src="img/icons-svg/action/svg/design/ic_done_24px.svg"></md-icon>
+                        </span>
+                        <span ng-show="!$parent.event_union.activity">
+                            <md-icon class = "md-warn" md-svg-src="img/icons-svg/navigation/svg/design/ic_close_24px.svg"></md-icon>
+                        </span>
+                    </td>
+                    <td md-cell><strong>批复及提问</strong></td>
+                    <td md-cell>
+                        <span ng-show="$parent.event_union.chat">
+                            <md-icon class = "md-green" md-svg-src="img/icons-svg/action/svg/design/ic_done_24px.svg"></md-icon>
+                        </span>
+                        <span ng-show="!$parent.event_union.chat">
+                            <md-icon class = "md-warn" md-svg-src="img/icons-svg/navigation/svg/design/ic_close_24px.svg"></md-icon>
+                        </span>
+                    </td>
+                </tr>
+
+
+                <tr md-row>
+                    <td md-cell><strong>详情</strong></td>
+                    <td md-cell>
+                        <!--<p>{{$parent.event_union.detail}}</p>-->
+                        <md-input-container class="md-block">
+                            <textarea readonly="value">{{$parent.event_union.detail}}
+                            </textarea>
+                        </md-input-container>
+                    </td>
+                </tr>
+
+                <tr md-row>
+                    <td md-cell><strong>备注</strong></td>
+                    <td md-cell>
+                        <p>{{$parent.event_union.comment}}</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </md-table-container>
+</md-card>
+<div layout="row">
+<md-card ng-show = "$parent.event_union.feedback">
+    <md-toolbar class="md-table-toolbar">
+        <div class="md-toolbar-tools">
+            <md-icon style="color:white" md-svg-src="img/icons-svg/action/svg/design/ic_dashboard_24px.svg"></md-icon>
+            <span>反馈形式</span>
+            <div flex></div>
+        </div>
+    </md-toolbar>
+   <md-table-container>
+        <table md-table>
+            <tbody md-body>
+                <tr md-row>
+                    <td md-cell><strong>反馈“已收到”</strong></td>
+                    <td md-cell>
+                        <span ng-show="$parent.event_union.recieve">
+                            <md-icon class = "md-green" md-svg-src="img/icons-svg/action/svg/design/ic_done_24px.svg"></md-icon>
+                        </span>
+                        <span ng-show="!$parent.event_union.recieve">
+                            <md-icon class = "md-warn" md-svg-src="img/icons-svg/navigation/svg/design/ic_close_24px.svg"></md-icon>
+                        </span>
+                        </div>
+                    </td>
+                    <td md-cell><strong>反馈文本信息</strong></td>
+                    <td md-cell>
+                        <span ng-show="$parent.event_union.txt">
+                            <md-icon class = "md-green" md-svg-src="img/icons-svg/action/svg/design/ic_done_24px.svg"></md-icon>
+                        </span>
+                        <span ng-show="!$parent.event_union.txt">
+                            <md-icon class = "md-warn" md-svg-src="img/icons-svg/navigation/svg/design/ic_close_24px.svg"></md-icon>
+                        </span>
+                        </div>
+                    </td>
+                    <td md-cell><strong>反馈文件</strong></td>
+                    <td md-cell>
+                        <span ng-show="$parent.event_union.file">
+                            <md-icon class = "md-green" md-svg-src="img/icons-svg/action/svg/design/ic_done_24px.svg"></md-icon>
+                        </span>
+                        <span ng-show="!$parent.event_union.file">
+                            <md-icon class = "md-warn" md-svg-src="img/icons-svg/navigation/svg/design/ic_close_24px.svg"></md-icon>
+                        </span>
+                        </div>
+                    </td>
+                </tr>           
+            </tbody>
+        </table>
+    </md-table-container>
+</md-card>
+<md-card ng-show = "$parent.event_union.activity">
+    <md-toolbar class="md-table-toolbar">
+        <div class="md-toolbar-tools">
+            <md-icon style="color:white" md-svg-src="img/icons-svg/action/svg/design/ic_dashboard_24px.svg"></md-icon>
+            <span>子活动形式</span>
+            <div flex></div>
+        </div>
+    </md-toolbar>
+   <md-table-container>
+        <table md-table>
+            <tbody md-body>
+                <tr md-row>
+                    <td md-cell><strong>子活动签到</strong></td>
+                    <td md-cell>
+                        <span ng-show="$parent.event_union.req_qrcode">
+                            <md-icon class = "md-green" md-svg-src="img/icons-svg/action/svg/design/ic_done_24px.svg"></md-icon>
+                        </span>
+                        <span ng-show="!$parent.event_union.req_qrcode">
+                            <md-icon class = "md-warn" md-svg-src="img/icons-svg/navigation/svg/design/ic_close_24px.svg"></md-icon>
+                        </span>
+                        </div>
+                    </td>
+                    <td md-cell><strong>上传子活动照片</strong></td>
+                    <td md-cell>
+                        <span ng-show="$parent.event_union.req_photo">
+                            <md-icon class = "md-green" md-svg-src="img/icons-svg/action/svg/design/ic_done_24px.svg"></md-icon>
+                        </span>
+                        <span ng-show="!$parent.event_union.req_photo">
+                            <md-icon class = "md-warn" md-svg-src="img/icons-svg/navigation/svg/design/ic_close_24px.svg"></md-icon>
+                        </span>
+                        </div>
+                    </td>
+                    <td md-cell><strong>上传子活动总结</strong></td>
+                    <td md-cell>
+                        <span ng-show="$parent.event_union.req_report">
+                            <md-icon class = "md-green" md-svg-src="img/icons-svg/action/svg/design/ic_done_24px.svg"></md-icon>
+                        </span>
+                        <span ng-show="!$parent.event_union.req_report">
+                            <md-icon class = "md-warn" md-svg-src="img/icons-svg/navigation/svg/design/ic_close_24px.svg"></md-icon>
+                        </span>
+                        </div>
+                    </td>
+                </tr>           
+            </tbody>
+        </table>
+    </md-table-container>
+</md-card>
+</div>

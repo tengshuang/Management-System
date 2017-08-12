@@ -1,0 +1,90 @@
+<div layout="column" ng-controller="regisCtrl as ctrl" layout-margin>
+	<md-content layout="vertical">
+		<div layout="row" layout-align="center center" layout-fill>
+			<md-whiteframe class="md-whiteframe-24dp" layout="column" flex="40" layout-padding>
+				<md-toolbar class="md-tall">
+				<span>清华大学工会</span>
+				<div layout="column">
+					<md-icon style="width: 100px; height: 78px;" md-svg-src="img/icons-svg/action/svg/design/ic_account_circle_24px.svg"></md-icon>
+					<div layout="row" layout-align="center center">
+					<span>注册</span>
+					</div>
+				</div>
+    			</md-toolbar>
+				<md-content md-theme="docs-dark" layout="column">
+					<form name = "regisForm" ng-submit="ctrl.regis(ctrl.user)">
+					<md-input-container class="md-icon-float md-block">
+						<label>工作证号</label>
+						<md-icon class="md-primary" md-svg-src="img/icons-svg/social/svg/design/ic_person_24px.svg" class="name"></md-icon>
+						<input ng-model="ctrl.user.no" type="text" required name="no">
+						<div ng-messages="regisForm.no.$error">
+          					<div ng-message="required">请使用工作证号进行注册，否则将不会通过</div>
+       	 				</div>
+					</md-input-container>
+						<md-input-container>
+						<label>密码</label>
+						<md-icon class="md-primary"md-svg-src="img/icons-svg/action/svg/design/ic_lock_24px.svg"></md-icon>
+						<input ng-model="ctrl.user.password" type="password" required name = "passport">
+						<div ng-messages="regisForm.passport.$error">
+          					<div ng-message="required">请设置您的密码</div>
+       	 				</div>
+					</md-input-container>
+
+					<md-input-container>
+						<label>确认密码</label>
+						<md-icon class="md-primary"md-svg-src="img/icons-svg/action/svg/design/ic_lock_24px.svg"></md-icon>
+						<input ng-model="ctrl.user.confirmpassword" type="password" required name = "conform">
+						<div ng-messages="regisForm.conform.$error">
+          					<div ng-message="required">请再次填写您的密码</div>
+       	 				</div>
+       	 				<div ng-message="required" ng-show="regisForm.conform.$dirty&&ctrl.user.confirmpassword!=ctrl.user.password">两次密码必须相同</div>
+					</md-input-container>
+
+					<md-input-container>
+						<label>真实姓名</label>
+						<md-icon class="md-primary"md-svg-src="img/icons-svg/action/svg/design/ic_accessibility_24px.svg"></md-icon>
+						<input ng-model="ctrl.user.realname" type="text" required name="realname">
+						<div ng-messages="regisForm.no.$error">
+          					<div ng-message="required">请使用真实姓名进行注册，否则将不会通过</div>
+       	 				</div>
+					</md-input-container>
+					<md-input-container>
+						<label>邮箱（可不填）</label>
+						<md-icon class="md-primary" md-svg-src="img/icons-svg/communication/svg/design/ic_email_24px.svg"></md-icon>
+						<input ng-model="ctrl.user.email" type="email" name="email" minlength="10" maxlength="100" ng-pattern="/^.+@.+\..+$/">
+						<div ng-show="regisForm.email.$dirty" ng-message-exp="['required','minlength', 'maxlength', 'pattern']">
+            				请使用有效的邮箱
+          				</div>
+					</md-input-container>
+					<div layout="row">
+						<md-icon class="md-primary" md-svg-src="img/icons-svg/social/svg/design/ic_domain_24px.svg"></md-icon>
+						<small style="margin-top: 15px;">分工会:&nbsp</small>
+						<div flex>
+      					<md-autocomplete name="appar"
+          					md-selected-item="ctrl.user.selectedItem"
+          					md-search-text-change="ctrl.searchTextChange(ctrl.searchText)"
+          					md-search-text="ctrl.searchText"
+          					md-selected-item-change="ctrl.selectedItemChange(item)"
+          					md-items="item in ctrl.querySearch(ctrl.searchText)"
+          					md-item-text="item.display"
+          					md-min-length="0"
+          					placeholder="填写所属分工会">
+        					<md-item-template>
+          					<span md-highlight-text="ctrl.searchText" md-highlight-flags="^i">{{item.display}}</span>
+        					</md-item-template>
+        					<md-not-found>
+          						没有匹配"{{ctrl.searchText}}"的选项
+          						<a ng-click="ctrl.newState(ctrl.searchText)">新建一个</a>
+        					</md-not-found>
+      					</md-autocomplete>
+						</div>
+					</div>
+					<md-input-container>
+						<md-button type="submit" ng-disabled="regisForm.$invalid" class="md-raised md-primary">注册</md-button>
+					</md-input-container>
+				</form>
+				</md-content>
+			</md-whiteframe>
+		</div>
+	</md-content>
+</div>

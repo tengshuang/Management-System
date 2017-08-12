@@ -1,0 +1,41 @@
+
+<div layout="column" layout-margin>
+	<md-content layout="vertical">
+		<div layout="row" layout-align="center center" layout-fill>
+			<md-whiteframe class="md-whiteframe-24dp" layout="column" flex="30"layout-padding>
+				<md-toolbar class="md-tall">
+				<span>清华大学工会</span>
+				<div layout="column">
+					<md-icon style="width: 100px; height: 78px;" md-svg-src="img/icons-svg/action/svg/design/ic_account_circle_24px.svg"></md-icon>
+					<div layout="row" layout-align="center center">
+					<span>登录</span>
+					</div>
+				</div>
+    			</md-toolbar>
+				<form name = "loginForm" data-ng-submit="login(user)">
+				<md-content md-theme="docs-dark" layout="column">
+					<md-input-container class="md-icon-float md-block">
+						<label>工作证号</label>
+						<md-icon md-svg-src="img/icons-svg/social/svg/design/ic_person_24px.svg" class="name"></md-icon>
+						<input ng-model="user.no" type="text" required>
+					</md-input-container>
+					<md-input-container>
+						<label>密码</label>
+						<md-icon md-svg-src="img/icons-svg/action/svg/design/ic_lock_24px.svg"></md-icon>
+						<input ng-model="user.password" type="password" required>
+					</md-input-container>
+					<div layout="row">
+						<md-input-container>
+							<md-button type="submit" class="md-raised md-primary" ng-disabled="loginForm.$invalid">登录</md-button>
+						</md-input-container>
+						<!--
+						<md-input-container> 
+							<md-button>注册</md-button>
+						</md-input-container>
+						-->
+				</md-content>
+			</form>
+			</md-whiteframe>
+		</div>
+	</md-content>
+</div>
